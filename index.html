@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FitTrack — Fitness & Wellness</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="brand"><span class="brand-mark">F</span> FitTrack</div>
+  <nav>
+    <a href="#home">Home</a><a href="#workouts">Workouts</a><a href="#nutrition">Nutrition</a>
+    <a href="#dashboard">Dashboard</a><a href="#coach">Smart Coach</a>
+  </nav>
+  <button class="btn btn-dark" onclick="scrollToId('dashboard')">Get Started</button>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">PERSONAL FITNESS PLATFORM</span>
+    <h1>Build a stronger<br><em>version of you.</em></h1>
+    <p>Track workouts, understand your progress and get simple, personalized guidance — all in one place.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="scrollToId('workouts')">Explore Workouts →</button>
+      <button class="btn btn-ghost" onclick="scrollToId('coach')">Try Smart Coach</button>
+    </div>
+    <div class="mini-proof"><span>✓ Beginner friendly</span><span>✓ Progress tracking</span><span>✓ Mobile ready</span></div>
+  </div>
+  <div class="hero-card">
+    <div class="ring"><strong>78%</strong><small>weekly goal</small></div>
+    <div class="hero-stat"><span>🔥 Calories</span><b id="heroCalories">1,240</b></div>
+    <div class="hero-stat"><span>⏱ Active minutes</span><b id="heroMinutes">186</b></div>
+    <div class="hero-stat"><span>🏋️ Workouts</span><b id="heroWorkouts">12</b></div>
+  </div>
+</section>
+
+<section class="section" id="workouts">
+  <div class="section-head"><div><span class="eyebrow">TRAIN SMART</span><h2>Workouts for every goal</h2></div><span class="muted">Choose a plan that fits your level.</span></div>
+  <div class="cards">
+    <article class="card workout"><div class="icon">⚡</div><span>BEGINNER</span><h3>Full Body Starter</h3><p>Simple movements to build consistency, strength and confidence.</p><div class="card-foot"><b>30 min</b><button onclick="openWorkout('fullbody')">View workout →</button></div></article>
+    <article class="card workout featured"><div class="icon">🏋️</div><span>STRENGTH</span><h3>Power Builder</h3><p>A balanced routine focused on major muscle groups and progressive overload.</p><div class="card-foot"><b>45 min</b><button onclick="openWorkout('power')">View workout →</button></div></article>
+    <article class="card workout"><div class="icon">🏃</div><span>CARDIO</span><h3>Energy Burn</h3><p>Intervals designed to improve endurance and keep your sessions engaging.</p><div class="card-foot"><b>35 min</b><button onclick="openWorkout('energy')">View workout →</button></div></article>
+  </div>
+</section>
+
+<section class="split section" id="nutrition">
+  <div class="dark-panel"><span class="eyebrow light">NUTRITION</span><h2>Fuel your progress.</h2><p>Healthy training works better with balanced nutrition. Use simple meal categories to plan your day.</p>
+  <div class="meal-list"><div>🥣 <b>Breakfast</b><span>Protein + whole grains</span></div><div>🥗 <b>Lunch</b><span>Vegetables + lean protein</span></div><div>🍎 <b>Snack</b><span>Fruit + nuts/yogurt</span></div><div>🍲 <b>Dinner</b><span>Balanced, filling meal</span></div></div></div>
+  <div class="bmi-panel"><span class="eyebrow">BMI CALCULATOR</span><h2>Know your number.</h2><div class="inputs"><label>Height (cm)<input id="height" type="number" placeholder="170"></label><label>Weight (kg)<input id="weight" type="number" placeholder="65"></label></div><button class="btn btn-primary" onclick="calculateBMI()">Calculate BMI</button><div id="bmiResult" class="result">Enter your details to calculate.</div><small class="muted">BMI is a general screening measure, not a diagnosis.</small></div>
+</section>
+
+<section class="section dashboard" id="dashboard">
+  <div class="section-head"><div><span class="eyebrow">YOUR ACTIVITY</span><h2>Progress dashboard</h2></div><button class="btn btn-ghost" onclick="loadStats()">Refresh data</button></div>
+  <div class="stat-grid">
+    <div class="stat"><span>Workouts completed</span><strong id="statWorkouts">0</strong><small>This account</small></div>
+    <div class="stat"><span>Active minutes</span><strong id="statMinutes">0</strong><small>Total logged</small></div>
+    <div class="stat"><span>Calories logged</span><strong id="statCalories">0</strong><small>Estimated</small></div>
+    <div class="stat"><span>Current goal</span><strong>Strength</strong><small>Demo profile</small></div>
+  </div>
+  <div class="table-card"><h3>Recent activity</h3><div id="activity">Loading...</div></div>
+</section>
+
+<section class="coach section" id="coach">
+  <div class="coach-copy"><span class="eyebrow light">SMART COACH</span><h2>A little guidance goes a long way.</h2><p>Choose your goal and experience FitTrack's lightweight rule-based coaching assistant.</p></div>
+  <div class="coach-box">
+    <label>Goal<select id="goal"><option>General Fitness</option><option>Build Strength</option><option>Lose Weight</option><option>Improve Flexibility</option></select></label>
+    <label>Level<select id="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+    <button class="btn btn-primary" onclick="getCoach()">Generate my plan</button>
+    <div id="coachResult" class="coach-result">Your plan will appear here.</div>
+  </div>
+</section>
+</main>
+
+<div id="workoutModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" onclick="closeWorkout()"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" onclick="closeWorkout()" aria-label="Close">×</button>
+    <div class="modal-top">
+      <span id="modalLevel" class="eyebrow">WORKOUT PLAN</span>
+      <h2 id="modalTitle">Workout</h2>
+      <p id="modalDescription"></p>
+      <div class="plan-meta"><span>⏱ <b id="modalDuration"></b></span><span>🔥 <b id="modalCalories"></b> kcal est.</span><span>🏋️ <b id="modalExerciseCount"></b> exercises</span></div>
+    </div>
+    <div id="exerciseList" class="exercise-list"></div>
+    <div class="modal-tip">💡 <b>Tip:</b> Use controlled movements, warm up before training, and stop if you feel sharp pain or feel unwell.</div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeWorkout()">Close</button><button id="completeWorkoutBtn" class="btn btn-primary">✓ Complete &amp; Log Workout</button></div>
+  </div>
+</div>
+
+<footer><div class="brand"><span class="brand-mark">F</span> FitTrack</div><p>Fitness technology project • Built with HTML, CSS, JavaScript, Node.js, Express and SQLite.</p><span>© 2026 FitTrack</span></footer>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
