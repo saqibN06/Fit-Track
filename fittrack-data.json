@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Demo User",
+      "email": "demo@fittrack.app",
+      "goal": "Build Strength"
+    }
+  ],
+  "workouts": []
+}

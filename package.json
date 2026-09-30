@@ -1,0 +1,13 @@
+{
+  "name": "fittrack",
+  "version": "1.0.1",
+  "description": "FitTrack - fitness and wellness web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
